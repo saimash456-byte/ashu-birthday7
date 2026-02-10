@@ -3,70 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>7 Days - The Special Dose</title>
+    <title>7 Days - The Heartbeat Case</title>
     <style>
-        :root { --blue: #00b4d8; --pink: #ff85a1; --red: #ff4d6d; }
+        :root { --main-red: #ff4d6d; --gold: #ffd700; --glass: rgba(255, 255, 255, 0.1); }
         body, html { margin:0; padding:0; overflow:hidden; font-family: 'Poppins', sans-serif; background: #0b090a; color: white; }
 
         .stage { display:none; width:100vw; height:100vh; justify-content:center; align-items:center; flex-direction:column; text-align:center; position:absolute; padding: 20px; box-sizing: border-box; }
-        .active { display:flex; animation: fadeIn 0.5s forwards; }
+        .active { display:flex; animation: fadeIn 0.8s ease-in-out; }
 
-        /* Pill Styling */
-        .pill-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .pill { width: 70px; height: 35px; border-radius: 20px; cursor: pointer; border: 2px solid white; box-shadow: 0 0 15px rgba(255,255,255,0.2); transition: 0.3s; }
-        .pill:hover { transform: scale(1.1); }
-        .blue-p { background: var(--blue); }
-        .pink-p { background: var(--pink); animation: glow 1.5s infinite; }
-        .red-p { background: var(--red); }
+        /* Glowing Heartbeat Animation */
+        .heartbeat-icon { font-size: 80px; color: var(--main-red); animation: beat 0.8s infinite; filter: drop-shadow(0 0 15px var(--main-red)); cursor: pointer; }
+        @keyframes beat { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* Pop-up Overlay */
-        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:1000; justify-content:center; align-items:center; padding:20px; box-sizing:border-box; }
-        .modal { background:white; color:#333; padding:25px; border-radius:20px; position:relative; width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; text-align: left; }
-        .close-btn { position:absolute; top:10px; right:15px; font-size: 20px; cursor:pointer; color: #888; font-weight: bold; }
+        /* Glass Door Design */
+        .cabin-door { width: 140px; height: 240px; border: 3px solid var(--glass); background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border-radius: 10px; position: relative; cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 0 40px rgba(255,77,109,0.2); }
+        .cabin-door::before { content: 'DR. ASHU JANU'; position: absolute; top: 30px; width: 100%; color: white; font-size: 0.7rem; letter-spacing: 2px; font-weight: bold; text-shadow: 0 0 5px white; }
+        .handle { position: absolute; right: 15px; top: 50%; width: 10px; height: 35px; background: var(--gold); border-radius: 5px; box-shadow: 0 0 15px var(--gold); }
 
-        /* Hug Animation */
-        .hug-arms { font-size: 50px; display: block; animation: hugAnim 1s ease-in-out infinite alternate; margin-bottom: 10px; text-align: center; }
-        
-        @keyframes hugAnim { from { transform: scale(0.9); } to { transform: scale(1.1); } }
-        @keyframes glow { 0% { box-shadow: 0 0 5px var(--pink); } 50% { box-shadow: 0 0 20px var(--pink); } 100% { box-shadow: 0 0 5px var(--pink); } }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        /* Letter Card Style */
+        .premium-card { width: 100%; max-width: 380px; background: rgba(255, 255, 255, 0.95); color: #1a1a1a; border-radius: 25px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-left: 10px solid var(--main-red); text-align: left; }
+        .btn-next { background: var(--main-red); color: white; border: none; padding: 15px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4); }
+
+        .line-item { margin-bottom: 12px; padding-left: 15px; border-left: 3px solid var(--main-red); font-style: italic; font-size: 0.95rem; line-height: 1.5; color: #333; animation: slideIn 0.5s ease; }
+
+        /* Floating Magic Objects */
+        .floating { position: absolute; pointer-events: none; opacity: 0.5; animation: floatObj 8s infinite ease-in-out; }
+        @keyframes floatObj { 0% { transform: translate(0,0); } 50% { transform: translate(20px, -50px); } 100% { transform: translate(0,0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="slide1" class="stage active">
-        <h2 style="color:var(--red); letter-spacing: 2px;">DOC ROOM</h2>
-        <div style="width:120px; height:180px; background:#5d4037; border-radius:5px; position:relative; cursor:pointer; border: 3px solid #3e2723;" onclick="nextSlide(1, 2)">
-            <div style="position:absolute; right:10px; top:50%; width:10px; height:10px; background:gold; border-radius:50%;"></div>
-        </div>
-        <p style="margin-top: 20px;">* Knock Knock *</p>
+        <div class="heartbeat-icon" onclick="startSurprise()">❤️</div>
+        <h2 style="margin-top: 20px; letter-spacing: 2px;">FEEL THE PULSE</h2>
+        <p style="color: #888;">Tap the heart to check Saim's condition</p>
     </div>
 
-    <div id="slide2" class="stage" style="background:#f8f9fa; color:#333;">
-        <h2 style="color:var(--red);">URGENT DOSE 🩺</h2>
-        <p style="font-size: 0.9rem;">Ma'am, patient ki recovery ke liye in mein se ek medicine select karein:</p>
-        
-        <div class="pill-grid">
-            <div onclick="openPill('blue')">
-                <div class="pill blue-p"></div>
-                <p style="font-size:0.7rem; font-weight:bold;">Memory</p>
-            </div>
-            <div onclick="openPill('pink')">
-                <div class="pill pink-p"></div>
-                <p style="font-size:0.7rem; font-weight:bold;">Special Hug</p>
-            </div>
-            <div onclick="openPill('red')">
-                <div class="pill red-p"></div>
-                <p style="font-size:0.7rem; font-weight:bold;">Countdown</p>
-            </div>
+    <div id="slide2" class="stage">
+        <h2 style="color: var(--main-red); letter-spacing: 3px; margin-bottom: 40px;">PRIVATE CABIN</h2>
+        <div class="cabin-door" onclick="nextSlide(2, 3)">
+            <div class="handle"></div>
         </div>
-        <p style="margin-top:50px; font-size:0.8rem; color:#aaa;">(Click each pill for a different surprise)</p>
+        <p style="margin-top: 30px; color: #888;">* Knock Knock *</p>
     </div>
 
-    <div id="pillOverlay" class="overlay">
-        <div class="modal">
-            <span class="close-btn" onclick="closePill()">✕</span>
-            <div id="pillContent"></div>
+    <div id="slide3" class="stage">
+        <h1 style="color: var(--main-red); font-size: 3rem;">🚨</h1>
+        <h2 style="color: var(--main-red);">CRITICAL STATUS</h2>
+        <p style="padding: 0 30px; font-size: 1.2rem;">"Ma'am, patient aapke baghair saans nahi le pa raha... Ye report foran check karein!"</p>
+        <button class="btn-next" onclick="nextSlide(3, 4)">Check Diagnosis 🩺</button>
+    </div>
+
+    <div id="slide4" class="stage" style="background: #fff0f3;">
+        <div class="floating" style="top:10%; left:10%; font-size:40px;">🦄</div>
+        <div class="premium-card">
+            <h3 style="color: var(--main-red);">Case Study: Page 1</h3>
+            <div class="line-item">1. Jab se tumhein dekha hai, mujhe apna aap bhool gaya hai, bas tumhari talash rehti hai.</div>
+            <div class="line-item">2. Tum mere liye sirf ek Doctor nahi, meri zindagi ki sabse haseen "Shifa" ho.</div>
+            <div class="line-item">3. Log kehte hain dil baayi (left) taraf hota hai, par mera dil wahan hai jahan tum ho.</div>
+            <div class="line-item">4. Tumhare bina meri har pulse rate itni low hoti hai ke lagta hai saans ruk jayegi.</div>
+            <div class="line-item">5. Main apna har marz tumhare naam karta hoon, bas tumhari ek muskurahat dawa ban jaye.</div>
+            <button class="btn-next" onclick="nextSlide(4, 5)">Continue Treatment ➡️</button>
+        </div>
+    </div>
+
+    <div id="slide5" class="stage" style="background: #fff0f3;">
+        <div class="floating" style="bottom:10%; right:15%; font-size:40px;">💊</div>
+        <div class="premium-card">
+            <h3 style="color: var(--main-red);">Heart Rate Status</h3>
+            <div class="line-item">1. Tumhein dekh kar dil ki dharkan itni teez ho jati hai ke koi ECG machine parh nahi sakti.</div>
+            <div class="line-item">2. Pharm-D ki degree tumhare paas hai, par meri rooh ka sara data tumhare paas hai.</div>
+            <div class="line-item">3. Tumhara chehra meri wo rozana ki dose hai jis ke bina mera din mukammal nahi hota.</div>
+            <div class="line-item">4. Main waada karta hoon ke tumhara har dukh mera hoga aur meri har khushi tumhari amanat.</div>
+            <div class="line-item">5. Tumhe dekho tu sakoon rehta hai, na dekhoon to poori duniya be-rang lagti hai.</div>
+            <button class="btn-next" onclick="nextSlide(5, 6)">Final Report ➡️</button>
+        </div>
+    </div>
+
+    <div id="slide6" class="stage" style="background: #fff0f3;">
+        <div class="floating" style="top:5%; left:45%; font-size:50px;">🎂</div>
+        <div class="premium-card" style="border-left-color: #333;">
+            <h2 style="color: var(--main-red); text-align:center;">7 DAYS LEFT! ❤️</h2>
+            <div class="line-item">1. 7 din baqi hain... meri maseeha ki birthday mere liye saal ka sabse bada din hai.</div>
+            <div class="line-item">2. Main hamesha tumhara protector ban kar sath rahoonga, har mushkil se tumhe bachata rahoonga.</div>
+            <div class="line-item">3. Tumhare hathon ki shifa meri zindagi ka sabse bada tohfa hai, hamesha mere sath rehna.</div>
+            <div class="line-item">4. Saim sirf tumhara hai aur hamesha tumhare kadmon ki dhool ban kar sath nibhayega.</div>
+            <div class="line-item">5. Advance Happy Birthday, Ashu Janu! Tumhari muskurahat meri jeet hai.</div>
+            <p style="text-align: right; font-weight: bold; margin-top: 15px; color: var(--main-red);">- Tera Saim</p>
+            <button class="btn-next" style="background: #333;" onclick="location.reload()">Re-read Letter</button>
         </div>
     </div>
 
@@ -74,44 +100,12 @@
         function nextSlide(current, next) {
             document.getElementById('slide' + current).style.display = 'none';
             document.getElementById('slide' + next).style.display = 'flex';
+            if (window.navigator.vibrate) window.navigator.vibrate(50);
         }
 
-        function openPill(type) {
-            const overlay = document.getElementById('pillOverlay');
-            const content = document.getElementById('pillContent');
-            overlay.style.display = 'flex';
-
-            if(type === 'blue') {
-                content.innerHTML = `
-                    <h3 style="color:var(--blue); text-align:center;">The First Step 🧠</h3>
-                    <p style="line-height:1.6; font-style:italic;">"Jab se tumhein dekha hai, mujhe apna aap bhool gaya hai. Tum mere liye sirf ek Doctor nahi, meri zindagi ki sabse haseen Shifa ho..."</p>
-                    <p style="font-size:0.8rem; color:#888; text-align:right;">- Tera Saim</p>
-                `;
-            } else if(type === 'pink') {
-                content.innerHTML = `
-                    <div class="hug-arms">🫂</div>
-                    <h3 style="color:var(--pink); text-align:center;">Just close your eyes to feel...</h3>
-                    <hr>
-                    <p style="line-height:1.6; font-size:0.95rem;">"Jab tumne FB par us Faisal ko kaha tha ke <b>'Saim jaisa koi nahi ho sakta, Saim special hai aur koi uski jagah nahi le sakta'</b>, to maine be-had lucky feel kiya tha ke main apni Ashu Janu ke liye itna important hoon."</p>
-                    <p style="line-height:1.6; font-size:0.95rem;">"Aur jab tumne kaha tha ke <b>33 saal aur baat karenge</b> group mein, tab mujhe yaqeen ho gaya tha ke agar koi bina mujhse uktaaye mere saath reh sakta hai, to wo sirf TUM ho."</p>
-                    <p style="text-align:center; font-weight:bold; color:var(--pink);">I love you forever! ❤️</p>
-                `;
-            } else if(type === 'red') {
-                content.innerHTML = `
-                    <h3 style="color:var(--red); text-align:center;">7 DAYS TO GO! 🎂</h3>
-                    <p style="text-align:center;">Doc Sahiba, sirf ek hafta baqi hai us haseen din mein!</p>
-                    <div style="background:#fff0f3; padding:10px; border-radius:10px; font-size:0.9rem;">
-                        - 8 din ka warrant khatam.<br>
-                        - Ab 7 din ki countdown shuru.<br>
-                        - Saim ka dil: 100% Aapka.
-                    </div>
-                    <button style="background:var(--red); color:white; border:none; padding:12px; border-radius:10px; width:100%; margin-top:15px; font-weight:bold;" onclick="location.reload()">Reset Case</button>
-                `;
-            }
-        }
-
-        function closePill() {
-            document.getElementById('pillOverlay').style.display = 'none';
+        function startSurprise() {
+            if (window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
+            nextSlide(1, 2);
         }
     </script>
 </body>
